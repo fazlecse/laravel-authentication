@@ -5,7 +5,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -21,34 +20,30 @@ class UserController extends Controller
         }
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-    
-        if(Auth::attempt($credentials)){
+
+        if (Auth::attempt($credentials)) {
             return redirect()->route('dashboard');
         }
     }
 
-    public function dashboardPage(){
-        if(Auth::check()){
-            return view('dashboard');
-        }else{
-            return redirect()->route('login');
-        }
+    public function dashboardPage()
+    {
+        return view('dashboard');
     }
 
-    public function innerPage(){
-        if(Auth::check()){
-            return view('inner');
-        }else{
-            return redirect()->route('login');
-        }
+    public function innerPage()
+    {
+        return view('inner');
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return view('login');
     }
